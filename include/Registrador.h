@@ -3,6 +3,7 @@
 
 typedef struct Registrador Registrador;
 
+void Registrador_init(Registrador *reg);
 unsigned char Registrador_zero(Registrador *reg);
 void Registrador_sub(Registrador *reg);
 void Registrador_ad(Registrador *reg);

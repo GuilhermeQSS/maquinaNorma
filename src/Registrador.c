@@ -1,8 +1,14 @@
+#include<stdlib.h>
 #include"Registrador.h"
 
 struct Registrador{
     unsigned int valor;
 };
+
+void Registrador_init(Registrador *reg){
+    reg = (Registrador*)malloc(sizeof(Registrador));
+    reg->valor = 0;
+}
 
 unsigned char Registrador_zero(Registrador *reg){
     return reg->valor == 0;
