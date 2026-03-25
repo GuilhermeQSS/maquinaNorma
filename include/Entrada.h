@@ -5,5 +5,6 @@
 
 void Entrada_string(char *strDest, int strSize);
 void Entrada_int(int *value);
+int Entrada_intReturn();
 
 #endif

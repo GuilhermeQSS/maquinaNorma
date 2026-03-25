@@ -1,3 +1,4 @@
+#include<stdio.h>
 #include<stdlib.h>
 #include"RegInteiro.h"
 #include"Registrador.h"
@@ -7,14 +8,27 @@ struct RegInteiro{
     Registrador *valor;
 };
 
-void RegInteiro_init(RegInteiro *regi){
-    regi = (RegInteiro*)malloc(sizeof(RegInteiro));
-    Registrador_init(regi->sinal);
-    Registrador_init(regi->valor);
+RegInteiro* RegInteiro_init(){
+    RegInteiro *regi = (RegInteiro*)malloc(sizeof(RegInteiro));
+    regi->valor = Registrador_init();
+    regi->sinal = Registrador_init();
+    return regi;
+}
+
+Registrador* RegInteiro_getSinal(RegInteiro *regi){
+    return regi->sinal;
+}
+
+Registrador* RegInteiro_getValor(RegInteiro *regi){
+    return regi->valor;
 }
 
 unsigned char RegInteiro_zero(RegInteiro *regi){
     return Registrador_zero(regi->valor);
+}
+
+unsigned char RegInteiro_negativo(RegInteiro *regi){
+    return !Registrador_zero(regi->sinal);
 }
 
 void RegInteiro_sub(RegInteiro *regi){
@@ -35,20 +49,17 @@ void RegInteiro_ad(RegInteiro *regi){
         Registrador_ad(regi->valor);
     }else{
         Registrador_sub(regi->valor);
-        if(Registrador_zero(regi->valor)){
-            Registrador_setZero(regi->sinal);
-        }
+        Registrador_sub(regi->sinal);
     }
 }
 
-void RegInteiro_setZero(RegInteiro *regi){
-    if(Registrador_zero(regi->sinal)){
-        while(!Registrador_zero(regi->valor)){
-            RegInteiro_sub(regi);
-        }
-    }else{
-        while(!Registrador_zero(regi->sinal)){
-            RegInteiro_ad(regi);
-        }
+void RegInteiro_set(RegInteiro *regi, int n){
+    if(n < 0){
+        Registrador_set(regi->sinal,1);
     }
+    Registrador_set(regi->valor,abs(n));
+}
+
+void RegInteiro_show(RegInteiro *regi){
+    printf("%d\t%d\n",Registrador_getValor(regi->sinal),Registrador_getValor(regi->valor));
 }

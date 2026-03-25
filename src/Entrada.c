@@ -19,3 +19,9 @@ void Entrada_int(int *value){
     Entrada_string(input,MAXINTCHARSIZE);
     (*value) = atoi(input);
 }
+
+int Entrada_intReturn(){
+    char input[MAXINTCHARSIZE];
+    Entrada_string(input,MAXINTCHARSIZE);
+    return atoi(input);
+}
