@@ -49,7 +49,9 @@ void RegInteiro_ad(RegInteiro *regi){
         Registrador_ad(regi->valor);
     }else{
         Registrador_sub(regi->valor);
-        Registrador_sub(regi->sinal);
+        if(Registrador_zero(regi->valor)){
+            Registrador_sub(regi->sinal);
+        }
     }
 }
 

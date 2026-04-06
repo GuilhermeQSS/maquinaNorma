@@ -140,105 +140,80 @@ void Maquina_ArecebeBusandoC(Maquina *maq){
     }
 }
 
-void Maquina_ArecebeAvezesBusandoCeD(Maquina *maq){
+void Maquina_ArecebeAvezesBusandoCeD(Maquina *maq) {
     Maquina_printRegisters(maq);
     printf("\n");
-    while (!RegInteiro_zero(maq->C)){
-        if (RegInteiro_negativo(maq->C)){
-            RegInteiro_ad(maq->C);
-        } else {
-            RegInteiro_sub(maq->C);
-        }
+
+    while (!RegInteiro_zero(maq->C)) {
+        if (RegInteiro_negativo(maq->C)) RegInteiro_ad(maq->C);
+        else RegInteiro_sub(maq->C);
     }
-    while (!RegInteiro_zero(maq->D)){
-        if (RegInteiro_negativo(maq->D)){
-            RegInteiro_ad(maq->D);
-        } else {
-            RegInteiro_sub(maq->D);
-        }
+    while (!RegInteiro_zero(maq->D)) {
+        if (RegInteiro_negativo(maq->D)) RegInteiro_ad(maq->D);
+        else RegInteiro_sub(maq->D);
     }
-    while (!RegInteiro_zero(maq->A)){
-        if (RegInteiro_negativo(maq->A)){
+
+    while (!RegInteiro_zero(maq->A)) {
+        if (RegInteiro_negativo(maq->A)) {
             RegInteiro_ad(maq->A);
-            RegInteiro_sub(maq->C);
+            RegInteiro_sub(maq->D);
         } else {
             RegInteiro_sub(maq->A);
+            RegInteiro_ad(maq->D);
+        }
+    }
+
+    while (!RegInteiro_zero(maq->B)) {
+        if (RegInteiro_negativo(maq->B)) {
+            RegInteiro_ad(maq->B);
+            RegInteiro_sub(maq->C);
+        } else {
+            RegInteiro_sub(maq->B);
             RegInteiro_ad(maq->C);
         }
-
-        Maquina_printRegisters(maq);
-        printf("\n");
     }
-    while (!RegInteiro_zero(maq->B)){
-        if (RegInteiro_negativo(maq->B)){
-            RegInteiro_ad(maq->B);
-            RegInteiro_sub(maq->D);
-        } else {
-            RegInteiro_sub(maq->B);
-            RegInteiro_ad(maq->D);
-        }
 
-        Maquina_printRegisters(maq);
-        printf("\n");
-    }
-    while (!RegInteiro_zero(maq->D)){
-        if (RegInteiro_negativo(maq->D)){
-            RegInteiro_ad(maq->D);
-            while (!RegInteiro_zero(maq->C)){
-                if (RegInteiro_negativo(maq->C)){
-                    RegInteiro_ad(maq->C);
-                    RegInteiro_sub(maq->A);
-                    RegInteiro_sub(maq->B);
-                } else {
-                    RegInteiro_sub(maq->C);
-                    RegInteiro_ad(maq->A);
-                    RegInteiro_ad(maq->B);
-                }
-            }
-            while (!RegInteiro_zero(maq->B)){
-                if (RegInteiro_negativo(maq->B)){
-                    RegInteiro_ad(maq->B);
-                    RegInteiro_sub(maq->C);
-                } else {
-                    RegInteiro_sub(maq->B);
-                    RegInteiro_ad(maq->C);
-                }
-            }
+    while (!RegInteiro_zero(maq->D)) {
+        int d_negativo = RegInteiro_negativo(maq->D);
+        
+        if (d_negativo) RegInteiro_ad(maq->D);
+        else RegInteiro_sub(maq->D);
 
-        } else {
-            RegInteiro_sub(maq->D);
-            while (!RegInteiro_zero(maq->C)){
-                if (RegInteiro_negativo(maq->C)){
-                    RegInteiro_ad(maq->C);
-                    RegInteiro_sub(maq->A);
-                    RegInteiro_sub(maq->B);
-                } else {
-                    RegInteiro_sub(maq->C);
-                    RegInteiro_ad(maq->A);
-                    RegInteiro_ad(maq->B);
-                }
-            }
-            while (!RegInteiro_zero(maq->B)){
-                if (RegInteiro_negativo(maq->B)){
-                    RegInteiro_ad(maq->B);
-                    RegInteiro_sub(maq->C);
-                } else {
-                    RegInteiro_sub(maq->B);
-                    RegInteiro_ad(maq->C);
-                }
+        while (!RegInteiro_zero(maq->C)) {
+            if (RegInteiro_negativo(maq->C)) {
+                RegInteiro_ad(maq->C);
+                if (d_negativo) RegInteiro_ad(maq->A); 
+                else RegInteiro_sub(maq->A);
+                RegInteiro_sub(maq->B);
+            } else {
+                RegInteiro_sub(maq->C);
+                if (d_negativo) RegInteiro_sub(maq->A);
+                else RegInteiro_ad(maq->A);
+                RegInteiro_ad(maq->B);
             }
         }
 
+        while (!RegInteiro_zero(maq->B)) {
+            if (RegInteiro_negativo(maq->B)) {
+                RegInteiro_ad(maq->B);
+                RegInteiro_sub(maq->C);
+            } else {
+                RegInteiro_sub(maq->B);
+                RegInteiro_ad(maq->C);
+            }
+        }
         Maquina_printRegisters(maq);
         printf("\n");
     }
-    while (!RegInteiro_zero(maq->D)){
-        if (RegInteiro_negativo(maq->D)){
-            RegInteiro_ad(maq->D);
+
+    while (!RegInteiro_zero(maq->C)) {
+        if (RegInteiro_negativo(maq->C)) {
+            RegInteiro_ad(maq->C);
             RegInteiro_sub(maq->B);
         } else {
-            RegInteiro_sub(maq->D);
+            RegInteiro_sub(maq->C);
             RegInteiro_ad(maq->B);
         }
     }
+    Maquina_printRegisters(maq);
 }
